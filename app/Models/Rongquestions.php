@@ -13,5 +13,7 @@ class Rongquestions extends Model
         'question_answer',
         'question_id',  
     ];
-    
+    public function questions(){
+        return $this->belongsTo(Question::class,'question_id','id');
+    } 
 }

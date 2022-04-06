@@ -13,5 +13,12 @@ class Question extends Model
         'question_answer',
         'exam_id',
     ];
+    public function exam(){
+        return $this->belongsTo(Exam::class,'exam_id','id');
+    }
+    public function Message(){
+        return $this->hasMany(Rongquestions::class,'question_id','id');
+    }
+
 
 }

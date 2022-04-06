@@ -1,21 +1,22 @@
 <?php
 
+
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Course;
 use App\Http\Controllers\Api\ApiResponseTrait;
 
-class CategoryController extends Controller
+class CourseController extends Controller
 {
     use ApiResponseTrait;
 
     
     public function index()
     {
-        $categories = Category::with('courses')->get();
+        $categories = Course::with('category')->get();
         return $this->apiResponse($categories,'success',200);
     }
 
@@ -28,14 +29,14 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::with('courses')->find($id);
+        $Course = Course::with('category')->find($id);
         
-        if($category)
+        if($Course)
         {
-            return $this->apiResponse($category,'success',200);
+            return $this->apiResponse($Course,'success',200);
         }
 
-        return $this->apiResponse(null,'The category Not Found',404);
+        return $this->apiResponse(null,'The Course Not Found',404);
     }
 
 
@@ -49,7 +50,9 @@ class CategoryController extends Controller
     {
         $validator  = Validator::make($request->all(),
         [
-            'category_name' => 'required|max:255',
+            'Course_name' => 'required|max:255',
+            'course_level' => 'required|max:255',
+             'category_id'=> 'required',
         ]);
 
         if ($validator->fails())
@@ -57,14 +60,14 @@ class CategoryController extends Controller
             return $this->apiResponse(null,$validator->errors(),400);
         }
 
-        $category = Category::create($request->all());
+        $Course = Course::create($request->all());
 
-        if($category)
+        if($Course)
         {
-            return $this->apiResponse($category,'The Category Saved',201);
+            return $this->apiResponse($Course,'The Course Saved',201);
         }
 
-        return $this->apiResponse(null,'The Category Not Save',400);
+        return $this->apiResponse(null,'The Course Not Save',400);
     }
 
 
@@ -79,7 +82,9 @@ class CategoryController extends Controller
     {
         $validator  = Validator::make($request->all(),
         [
-            'name' => 'required|max:255',
+            'course_name' => 'required|max:255',
+            'course_level' => 'required|max:255',
+            'category_level' => 'required',
         ]);
 
         if ($validator->fails())
@@ -87,18 +92,18 @@ class CategoryController extends Controller
             return $this->apiResponse(null,$validator->errors(),400);
         }
 
-        $category = Category::find($id);
+        $Course = Course::find($id);
 
-        if(!$category)
+        if(!$Course)
         {
-            return $this->apiResponse(null,'The Category Not Found',404);
+            return $this->apiResponse(null,'The Course Not Found',404);
         }
 
-        $category->update($request->all());
+        $Course->update($request->all());
 
-        if($category)
+        if($Course)
         {
-            return $this->apiResponse($category,'The Category Update',201);
+            return $this->apiResponse($Course,'The Course Update',201);
         }
     }
 
@@ -110,18 +115,18 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $Course = Course::find($id);
 
-        if(!$category)
+        if(!$Course)
         {
-            return $this->apiResponse(null,'The Category Not Found',404);
+            return $this->apiResponse(null,'The Course Not Found',404);
         }
 
-        $category->delete($id);
+        $Course->delete($id);
 
-        if($category)
+        if($Course)
         {
-            return $this->apiResponse(null,'The Category Deleted',200);
+            return $this->apiResponse(null,'The Course Deleted',200);
         }
     }
 }

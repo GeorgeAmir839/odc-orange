@@ -10,5 +10,10 @@ class Trainer extends Model
     use HasFactory;
     protected $fillable = [
         'trainer_name',
+        'phone',
+        'email'
     ];
+    public function teashing(){
+        return $this->hasMany(Teaching::class,'trainer_id','id');
+    }
 }

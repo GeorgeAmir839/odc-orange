@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('student_courses', function (Blueprint $table) {
+        Schema::create('enrolls', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->references('id')->on('users')
             ->nullable()->onDelete('cascade')
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('course_id')->constrained()->references('id')->on('courses')
             ->nullable()->onDelete('cascade')
             ->onUpdate('cascade'); 
-            $table->string('verification_code');    
+            $table->string('verification_code')->nullable()->unique();    
             $table->timestamps();
         });
     }
