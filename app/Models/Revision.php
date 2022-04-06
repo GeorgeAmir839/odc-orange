@@ -15,4 +15,16 @@ class Revision extends Model
         'exam_id',
         'student_id'
     ];
+
+    public function student(){
+        return $this->belongsTo(User::class,'student_id','id');
+    }
+    
+    public function exam(){
+        return $this->belongsTo(Exam::class,'exam_id','id');
+    }
+
+
+
+
 }

@@ -13,4 +13,11 @@ class Enroll extends Model
         'course_id',
         'verification_code',
     ];
+    public function student(){
+        return $this->belongsTo(User::class,'student_id','id');
+    }
+    public function course(){
+        return $this->belongsTo(Course::class,'course_id','id');
+    }
+
 }

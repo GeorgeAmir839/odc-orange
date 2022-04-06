@@ -11,4 +11,15 @@ class Exam extends Model
     protected $fillable = [
         'course_id',
     ];
+    public function course(){
+        return $this->belongsTo(Course::class,'course_id','id');
+    }
+    public function Questions(){
+        return $this->hasMany(Question::class,'exam_id','id');
+    }
+
+    public function  Revision(){
+        return $this->hasMany(Revision::class,'exam_id','id');
+    }
+
 }

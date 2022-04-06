@@ -18,13 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'student_name',
+        'name',
         'email',
         'phone',
         'student_address',
         'collage',
         'password',
         'password_confirmation',
+        'is_admin'
     ];
 
     /**
@@ -45,4 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function enroll(){
+        return $this->hasMany(Enroll::class,'student_id','id');
+    }
+
+    public function Message(){
+        return $this->hasMany(Message::class,'student_id','id');
+    }
+    public function  Revision(){
+        return $this->hasMany(Revision::class,'student_id','id');
+    }
+
+
+
 }

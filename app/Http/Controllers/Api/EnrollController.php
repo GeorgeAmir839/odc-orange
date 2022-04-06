@@ -5,17 +5,17 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Enroll;
 use App\Http\Controllers\Api\ApiResponseTrait;
 
-class CategoryController extends Controller
+class EnrollController extends Controller
 {
     use ApiResponseTrait;
 
     
     public function index()
     {
-        $categories = Category::with('courses')->get();
+        $categories = Enroll::with('course','student')->get();
         return $this->apiResponse($categories,'success',200);
     }
 
@@ -28,14 +28,14 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::with('courses')->find($id);
+        $Enroll = Enroll::with('course','student')->find($id);
         
-        if($category)
+        if($Enroll)
         {
-            return $this->apiResponse($category,'success',200);
+            return $this->apiResponse($Enroll,'success',200);
         }
 
-        return $this->apiResponse(null,'The category Not Found',404);
+        return $this->apiResponse(null,'The Enroll Not Found',404);
     }
 
 
@@ -49,7 +49,7 @@ class CategoryController extends Controller
     {
         $validator  = Validator::make($request->all(),
         [
-            'category_name' => 'required|max:255',
+            'Enroll_name' => 'required|max:255',
         ]);
 
         if ($validator->fails())
@@ -57,14 +57,14 @@ class CategoryController extends Controller
             return $this->apiResponse(null,$validator->errors(),400);
         }
 
-        $category = Category::create($request->all());
+        $Enroll = Enroll::create($request->all());
 
-        if($category)
+        if($Enroll)
         {
-            return $this->apiResponse($category,'The Category Saved',201);
+            return $this->apiResponse($Enroll,'The Enroll Saved',201);
         }
 
-        return $this->apiResponse(null,'The Category Not Save',400);
+        return $this->apiResponse(null,'The Enroll Not Save',400);
     }
 
 
@@ -87,18 +87,18 @@ class CategoryController extends Controller
             return $this->apiResponse(null,$validator->errors(),400);
         }
 
-        $category = Category::find($id);
+        $Enroll = Enroll::find($id);
 
-        if(!$category)
+        if(!$Enroll)
         {
-            return $this->apiResponse(null,'The Category Not Found',404);
+            return $this->apiResponse(null,'The Enroll Not Found',404);
         }
 
-        $category->update($request->all());
+        $Enroll->update($request->all());
 
-        if($category)
+        if($Enroll)
         {
-            return $this->apiResponse($category,'The Category Update',201);
+            return $this->apiResponse($Enroll,'The Enroll Update',201);
         }
     }
 
@@ -110,18 +110,18 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $Enroll = Enroll::find($id);
 
-        if(!$category)
+        if(!$Enroll)
         {
-            return $this->apiResponse(null,'The Category Not Found',404);
+            return $this->apiResponse(null,'The Enroll Not Found',404);
         }
 
-        $category->delete($id);
+        $Enroll->delete($id);
 
-        if($category)
+        if($Enroll)
         {
-            return $this->apiResponse(null,'The Category Deleted',200);
+            return $this->apiResponse(null,'The Enroll Deleted',200);
         }
-    }
+    } 
 }

@@ -12,5 +12,11 @@ class Teaching extends Model
         'trainer_id',
         'course_id',  
     ];
+    public function trainers(){
+        return $this->belongsTo(Trainer::class,'trainer_id','id');
+    }
+    public function courses(){
+        return $this->belongsTo(Course::class,'course_id','id');
+    }
 
 }
